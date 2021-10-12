@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<h1>Edit task</h1>
+<div class="col-md-4">
+    <form action="" method="post" class="form" enctype="multipart/form-data" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens=True) }}
+        {{ wtf.form_field(form.title) }}
+        {{ wtf.form_field(form.desc) }}
+        
+        {% if task.file_path != None and task.file_path != '' %}
+            <label class="control-label">Attached file: </label>
+                <a href="{{ url_for('file_path', id=task.id, file_name=task.file_name) }}" download>{{ task.file_name }}</a>
+                
+        {% else %}
+            {{ wtf.form_field(form.upload_file) }}
+        {% endif %}
+       
+        {{ wtf.form_field(form.deadline) }}
+        {{ wtf.form_field(form.submit) }}
+    </form>
+    <script>
+        var offset = new Date().getTimezoneOffset();
+        document.getElementById("time_offset").value = offset;
+    </script>
+</div>
+
+{% endblock %}

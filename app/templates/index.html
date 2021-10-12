@@ -1,0 +1,36 @@
+{%extends "layout.html"%}
+{%block app_content%}
+
+<h1>{{ current_user.username.capitalize() }} - active tasks: {{ count }}</h1>
+
+{% for task in tasks %}
+
+{% if task[0].deadline != None %}
+    {% if task[1] < 0 %}
+    <div class="panel panel-danger">
+    {% elif task[1] < 3600 %}
+    <div class="panel panel-warning">
+    {% else %}
+    <div class="panel panel-info">
+    {% endif%}
+        <div class="panel-heading">
+            <a href="{{ url_for('task_detail', id=task[0].id) }}" title="Task detail"><h3 class="panel-title">{{ task[0].title }}</h3></a>
+        </div>
+        <div class="panel-body">
+            Deadline: {{ moment(task[0].deadline).fromNow() }}<br>
+            <a href="{{ url_for('task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
+        </div>
+    </div>
+{% else %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <a href="{{ url_for('task_detail', id=task[0].id) }}" title="Task detail"><h3 class="panel-title">{{ task[0].title }}</h3></a>
+        </div>
+        <div class="panel-body">
+            <a href="{{ url_for('task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
+        </div>   
+    </div>
+{% endif %}
+
+{% endfor %}
+{%endblock%}

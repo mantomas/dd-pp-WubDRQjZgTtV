@@ -1,6 +1,6 @@
 # TODO in Flask
 **WORK IN PROGRESS**  
-Skeleton of simple ToDo app. Written in Python using Flask and Bootstrap. It can be used as a starting point to create something more advanced.  
+Skeleton of simple ToDo app. Written in Python (3.9+) using Flask and Bootstrap. It can be used as a starting point to create something more advanced.  
 
 ![Preview](todo.png)  
 ## Features overview
@@ -51,11 +51,15 @@ todo
 **models.py** - SQAlchemy DB models and their methods  
 **routes.py** - mapping of URL pathes to function calls  
 **templates** - Jinja templates in html  
-**migrations** - keeping tracsk of DB changes and their migrations, used for DB upgrade  
+**migrations** - keeping track of DB changes and their migrations, used for DB upgrade  
 
-## Installation and running
-
-## Possible next steps
+## Installation and running (development)
+1. clone repository
+2. create and activate Python virtual environment (tested on python 3.9.+ but should work in 3.7.+)
+3. install dependencies `pip install -r requirements.txt`
+4. create local DB `flask db upgrade` (creates *todo.db*, SQLite, in the root folder of the application , with the tables created)
+5. run the app `python run.py`
+## Possible next steps (ToDo)
 - [ ] **tests**
 - [ ] **more advanced user account:** email, editable profile page, password recovery, statistics, export to various file formats, deleting an account
 - [ ] **search function:** titles, body

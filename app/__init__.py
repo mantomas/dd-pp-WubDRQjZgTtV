@@ -19,7 +19,9 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 migrate = Migrate(app, db)
 
+
 if not app.debug:
+    # creates rotating log files if not in debug mode
     if not os.path.exists("logs"):
         os.mkdir("logs")
     file_handler = RotatingFileHandler("logs/todo.log", maxBytes=10240, backupCount=10)

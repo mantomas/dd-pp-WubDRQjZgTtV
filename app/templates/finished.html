@@ -1,12 +1,13 @@
 {%extends "layout.html"%}
-{%block app_content%}
 {% block nav_finished %}active{% endblock %}    
-    <h1>{{ current_user.username.capitalize() }} - finished tasks: {{ tasks.count() }}</h1>
+{%block app_content%}
+<div class="container">
+    <h1>{{ current_user.username.title() }} - finished tasks: {{ tasks.count() }}</h1>
 
     {% for task in tasks %}
     <div class="panel panel-success">
         <div class="panel-heading">
-            <a href="{{ url_for('task_detail', id=task.id) }}" title="Task detail"><h3 class="panel-title">{{ task.title }}</h3></a>
+            <a href="{{ url_for('task_detail', id=task.id) }}" title="Task detail" style="color: #333333;"><h3 class="panel-title">{{ task.title }}</h3></a>
         </div>
         <div class="panel-body">
             Finished: {{ moment(task.finished_time).format('LLLL') }}

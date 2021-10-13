@@ -11,7 +11,7 @@ from flask import (
 from flask_login import current_user, login_user, logout_user
 from flask_login.utils import login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, AddForm, EditForm
+from app.forms import LoginForm, RegistrationForm, AddForm
 from app.models import User, Task
 from config import Config
 from werkzeug.utils import secure_filename
@@ -113,14 +113,14 @@ def addtask():
         db.session.add(task)
         db.session.commit()
         flash("New task added successfully")
-        return render_template("task.html", title=task.title, task=task)
+        return redirect(url_for("task_detail", id=task.id))
     return render_template("addtask.html", title="Add task", form=form)
 
 
 @app.route("/edit/<id>", methods=["GET", "POST"])
 @login_required
 def edit_task(id):
-    form = EditForm()
+    form = AddForm()
     task = Task.query.get(id)
     if task is None or task.author != current_user or task.finished is True:
         flash("There is no such task or is marked as finished.")

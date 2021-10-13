@@ -26,13 +26,13 @@ Skeleton of simple ToDo app. Written in Python using Flask and Bootstrap. It can
     - link to attachment (if any)
     - the ability to permanently delete a task
 ## Possible next steps
-- [] **tests**
-- [] **more advanced user account:** email, editable profile page, password recovery, statistics, export to various file formats, deleting an account
-- [] **search function:** titles, body
-- [] **date-time picker in JS**
-- [] **tasks filtering**
-- [] **optional email notification**
-- [] **supervisor account**
+- [ ] **tests**
+- [ ] **more advanced user account:** email, editable profile page, password recovery, statistics, export to various file formats, deleting an account
+- [ ] **search function:** titles, body
+- [ ] **date-time picker in JS**
+- [ ] **tasks filtering**
+- [ ] **optional email notification**
+- [ ] **supervisor account**
 ## App structure
 
 ## Installation and development

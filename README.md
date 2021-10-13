@@ -25,6 +25,36 @@ Skeleton of simple ToDo app. Written in Python using Flask and Bootstrap. It can
     - with time of creation
     - link to attachment (if any)
     - the ability to permanently delete a task
+## Application structure - only necessary
+```
+todo
+│   run.py   
+│   config.py
+│
+└───app
+│   │   __init__.py
+│   │   forms.py
+│   │   models.py
+│   │   routes.py
+│   │
+│   └───templates
+│       │   layout.html
+│       │   ... 
+│
+└───migrations
+    │   ... 
+```
+**run.py** - starting script, loads main app, debug option switcher  
+**config.py** - Flask and app basic configuration, DB path, upload path, max filesize, file extensions allowed  
+**__init__.py** - joining all parts together  
+**forms.py** - forms used in templates and their validation  
+**models.py** - SQAlchemy DB models and their methods  
+**routes.py** - mapping of URL pathes to function calls  
+**templates** - Jinja templates in html  
+**migrations** - keeping tracsk of DB changes and their migrations, used for DB upgrade  
+
+## Installation and running
+
 ## Possible next steps
 - [ ] **tests**
 - [ ] **more advanced user account:** email, editable profile page, password recovery, statistics, export to various file formats, deleting an account
@@ -33,6 +63,3 @@ Skeleton of simple ToDo app. Written in Python using Flask and Bootstrap. It can
 - [ ] **tasks filtering**
 - [ ] **optional email notification**
 - [ ] **supervisor account**
-## App structure
-
-## Installation and development

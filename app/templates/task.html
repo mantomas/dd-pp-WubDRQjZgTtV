@@ -7,8 +7,8 @@
     {% endif %}
     {% if task.file_path != None and task.file_path != ''%}
         <p>
-                Attached file: <a href="{{ url_for('file_path', id=task.id, file_name=task.file_name) }}" download>{{ task.file_name }}</a>
-            <a href="{{ url_for('delete_file', id=task.id) }}">Delete file</a>
+                Attached file: <a href="{{ url_for('main.file_path', id=task.id, file_name=task.file_name) }}" download>{{ task.file_name }}</a>
+            <a href="{{ url_for('main.delete_file', id=task.id) }}">Delete file</a>
         </p>
     {% endif %}
     <p>Created: {{ moment(task.timestamp).format('LLLL') }}</p>
@@ -16,13 +16,13 @@
         <p>Deadline: {{ moment(task.deadline).fromNow() }}</p>
     {% endif %}
     {% if task.finished == False %}
-        <p><a href="{{ url_for('edit_task', id=task.id) }}">Edit</p>
-        <p><a href="{{ url_for('task_finished', id=task.id) }}">Mark as done</a></p>
+        <p><a href="{{ url_for('main.edit_task', id=task.id) }}">Edit</p>
+        <p><a href="{{ url_for('main.task_finished', id=task.id) }}">Mark as done</a></p>
     {% endif %}
     {% if task.finished == True %}
         <p>Finished: {{ moment(task.finished_time).format('LLLL') }}</p>
-        <p><a href="{{ url_for('task_unfinished', id=task.id) }}">Mark as unfinished</a></p>
+        <p><a href="{{ url_for('main.task_unfinished', id=task.id) }}">Mark as unfinished</a></p>
     {% endif %}
-    <p><a href="{{ url_for('delete_task', id=task.id) }}">Delete permanently</a></p>
+    <p><a href="{{ url_for('main.delete_task', id=task.id) }}">Delete permanently</a></p>
 </div>
 {%endblock%}

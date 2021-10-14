@@ -7,7 +7,7 @@
     {% for task in tasks %}
     <div class="panel panel-success">
         <div class="panel-heading">
-            <a href="{{ url_for('task_detail', id=task.id) }}" title="Task detail" style="color: #333333;"><h3 class="panel-title">{{ task.title }}</h3></a>
+            <a href="{{ url_for('main.task_detail', id=task.id) }}" title="Task detail" style="color: #333333;"><h3 class="panel-title">{{ task.title }}</h3></a>
         </div>
         <div class="panel-body">
             Finished: {{ moment(task.finished_time).format('LLLL') }}

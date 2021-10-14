@@ -12,9 +12,10 @@ from flask_login import current_user
 from flask_login.utils import login_required
 from app import db
 from app.main.forms import AddForm
-from app.models import User, Task
-from config import Config
+from app.models import Task
 from werkzeug.utils import secure_filename
+from app.main import bp
+from config import Settings
 
 
 @bp.route("/index", methods=["GET", "POST"])
@@ -50,7 +51,7 @@ def addtask():
             f = form.upload_file.data
             filename = secure_filename(f.filename)
             filename_unique = f"{dt.datetime.now().timestamp()}-{filename}"
-            user_path = os.path.join(Config.UPLOAD_FOLDER, str(current_user.id))
+            user_path = os.path.join(Settings.UPLOAD_FOLDER, str(current_user.id))
             if not os.path.exists(user_path):
                 os.makedirs(user_path)
             f.save(os.path.join(user_path, filename_unique))
@@ -91,7 +92,7 @@ def edit_task(id):
             f = form.upload_file.data
             filename = secure_filename(f.filename)
             filename_unique = f"{dt.datetime.now().timestamp()}-{filename}"
-            user_path = os.path.join(Config.UPLOAD_FOLDER, str(current_user.id))
+            user_path = os.path.join(Settings.UPLOAD_FOLDER, str(current_user.id))
             if not os.path.exists(user_path):
                 os.makedirs(user_path)
             f.save(os.path.join(user_path, filename_unique))
@@ -109,7 +110,7 @@ def edit_task(id):
         task.utc_offset = utc_diff
         db.session.commit()
         flash("Task edited")
-        return redirect(url_for("task_detail", id=task.id))
+        return redirect(url_for("main.task_detail", id=task.id))
     elif request.method == "GET":
         form.title.data = task.title
         form.desc.data = task.desc
@@ -126,8 +127,8 @@ def file_path(id, file_name):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such file.")
-        return redirect(url_for("index"))
-    file_path = os.path.join(Config.UPLOAD_FOLDER, str(current_user.id))
+        return redirect(url_for("main.index"))
+    file_path = os.path.join(Settings.UPLOAD_FOLDER, str(current_user.id))
     return send_from_directory(file_path, task.file_path, download_name=task.file_name)
 
 
@@ -140,7 +141,7 @@ def delete_file(id):
         return redirect(url_for("index"))
     if task.file_path is not None and task.file_path != "":
         file_path = os.path.join(
-            Config.UPLOAD_FOLDER, str(current_user.id), task.file_path
+            Settings.UPLOAD_FOLDER, str(current_user.id), task.file_path
         )
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -150,7 +151,7 @@ def delete_file(id):
             flash("Attached file deleted")
             return redirect(url_for("task_detail", id=task.id))
     flash("There is no such file to delete")
-    return redirect(url_for("task_detail", id=task.id))
+    return redirect(url_for("main.task_detail", id=task.id))
 
 
 @bp.route("/task/<id>", methods=["GET"])
@@ -159,7 +160,7 @@ def task_detail(id):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such task.")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     return render_template("task.html", title=task.title, task=task)
 
 
@@ -169,12 +170,12 @@ def task_finished(id):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such task.")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     task.mark_finished()
     db.session.add(task)
     db.session.commit()
     flash(f"Finished: {task.title}")
-    return redirect(url_for("index"))
+    return redirect(url_for("main.index"))
 
 
 @bp.route("/unfinished/<id>", methods=["GET", "POST"])
@@ -183,12 +184,12 @@ def task_unfinished(id):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such task.")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     task.mark_unfinished()
     db.session.add(task)
     db.session.commit()
     flash("Task marked as unfinished")
-    return redirect(url_for("task_detail", id=task.id))
+    return redirect(url_for("main.task_detail", id=task.id))
 
 
 @bp.route("/finished", methods=["GET", "POST"])
@@ -207,8 +208,18 @@ def delete_task(id):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such task.")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
+    if task.file_path is not None and task.file_path != "":
+        file_path = os.path.join(
+            Settings.UPLOAD_FOLDER, str(current_user.id), task.file_path
+        )
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            task.file_path = None
+            task.file_name = None
+            db.session.commit()
+            flash("Attached file deleted")
     db.session.delete(task)
     db.session.commit()
     flash("Task deleted")
-    return redirect(url_for("index"))
+    return redirect(url_for("main.index"))

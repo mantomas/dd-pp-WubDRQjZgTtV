@@ -3,7 +3,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
+class Config:
     """Flask app configuration"""
 
     # for production SECRET_KEY env. variable must be set
@@ -15,9 +15,13 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # limit to 2MB upload
     MAX_CONTENT_LENGTH = 2048 * 2048
-    # folder will be created upon first upload
-    UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
-    # False to disable registration
-    REGISTRATION_ALLOWED = True
     # list of allowed file extensions to download
     FILE_ALLOWED = ['png', 'jpg', 'jpeg', 'pdf', 'txt']
+
+
+class Settings:
+    """Application specific settings"""
+    # False to disable registration
+    REGISTRATION_ALLOWED = True
+    # folder will be created upon first upload
+    UPLOAD_FOLDER = os.path.join(basedir, 'uploads')

@@ -9,7 +9,7 @@
 <div class="col-md-4">
     {{ wtf.quick_form(form) }}
     {% if registration_allowed %}
-    <p>New registration? <a href="{{ url_for('register') }}">Sign In!</a></p>
+    <p>New registration? <a href="{{ url_for('auth.register') }}">Sign In!</a></p>
     {% endif %}
 </div>
 </div>

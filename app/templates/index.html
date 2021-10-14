@@ -14,20 +14,20 @@
     <div class="panel panel-info">
     {% endif%}
         <div class="panel-heading">
-            <a href="{{ url_for('task_detail', id=task[0].id) }}" title="Task detail" style="color: #333333;"><h3 class="panel-title">{{ task[0].title }}</h3></a>
+            <a href="{{ url_for('main.task_detail', id=task[0].id) }}" title="Task detail" style="color: #333333;"><h3 class="panel-title">{{ task[0].title }}</h3></a>
         </div>
         <div class="panel-body">
             Deadline: {{ moment(task[0].deadline).fromNow() }}<br>
-            <a href="{{ url_for('task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
+            <a href="{{ url_for('main.task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
         </div>
     </div>
 {% else %}
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <a href="{{ url_for('task_detail', id=task[0].id) }}" title="Task detail" style="color: #ffffff;"><h3 class="panel-title">{{ task[0].title }}</h3></a>
+            <a href="{{ url_for('main.task_detail', id=task[0].id) }}" title="Task detail" style="color: #ffffff;"><h3 class="panel-title">{{ task[0].title }}</h3></a>
         </div>
         <div class="panel-body">
-            <a href="{{ url_for('task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
+            <a href="{{ url_for('main.task_finished', id=task[0].id) }}" title="Mark task as finished">Done</a>
         </div>   
     </div>
 {% endif %}

@@ -138,7 +138,7 @@ def delete_file(id):
     task = Task.query.get(id)
     if task is None or task.author != current_user:
         flash("There is no such file.")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     if task.file_path is not None and task.file_path != "":
         file_path = os.path.join(
             Settings.UPLOAD_FOLDER, str(current_user.id), task.file_path
@@ -149,7 +149,7 @@ def delete_file(id):
             task.file_name = None
             db.session.commit()
             flash("Attached file deleted")
-            return redirect(url_for("task_detail", id=task.id))
+            return redirect(url_for("main.task_detail", id=task.id))
     flash("There is no such file to delete")
     return redirect(url_for("main.task_detail", id=task.id))
 

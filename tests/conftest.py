@@ -42,6 +42,8 @@ def db(app, request):
     """Creates session db with migrations"""
     def teardown():
         _db.drop_all()
+        if os.path.exists(db_path):
+            os.unlink(db_path)
 
     _db.app = app
     apply_migrations()
@@ -65,8 +67,6 @@ def session(db, request):
         transaction.rollback()
         connection.close()
         session.remove()
-        if os.path.exists(db_path):
-            os.unlink(db_path)
 
     request.addfinalizer(teardown)
     return session

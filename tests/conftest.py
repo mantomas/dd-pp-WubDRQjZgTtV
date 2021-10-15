@@ -1,3 +1,4 @@
+import os
 import pytest
 import tempfile
 from app import create_app
@@ -12,7 +13,7 @@ db_fd, db_path = tempfile.mkstemp()
 
 class TestConfig(Conf):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = db_path
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + db_path
 
 
 def apply_migrations():
@@ -38,7 +39,7 @@ def app(request):
 
 @pytest.fixture(scope='session')
 def db(app, request):
-
+    """Creates session db with migrations"""
     def teardown():
         _db.drop_all()
 
@@ -51,7 +52,7 @@ def db(app, request):
 
 @pytest.fixture(scope='function')
 def session(db, request):
-    """Creates a new database session for a test."""
+    """Creates a new database session for a test"""
     connection = _db.engine.connect()
     transaction = connection.begin()
 
@@ -64,6 +65,8 @@ def session(db, request):
         transaction.rollback()
         connection.close()
         session.remove()
+        if os.path.exists(db_path):
+            os.unlink(db_path)
 
     request.addfinalizer(teardown)
     return session

@@ -53,6 +53,9 @@ todo
 │   └───templates
 │   │        layout.html
 │   │        ... 
+│   └───tests
+│            conftest.py
+|            ...
 │
 └───migrations
     │   ... 
@@ -72,6 +75,7 @@ todo
 **app/errors/handlers.py** - routing for error pages  
 **templates** - Jinja templates in html  
 **migrations** - keeping track of DB changes and their migrations, used for DB upgrade - auto-generated  
+**tests/conftest.py** - test fixtures  
 
 ## Installation and running (development)
 1. clone repository
@@ -79,6 +83,9 @@ todo
 3. install dependencies `pip install -r requirements.txt`
 4. create local DB `flask db upgrade` (creates *todo.db*, SQLite, in the root folder of the application , with the tables created)
 5. run the app `flask run`
+
+## Testing
+All tests are in a subfolder `tests` and configured to use **Pytest** suite, which is a part of dependencies. To run all tests, activate virtual environment and execute `pytest` in application root folder.
 ## Possible next steps (ToDo)
 - [ ] **tests**
 - [ ] **more advanced user account:** email, editable profile page, password recovery, statistics, export to various file formats, deleting an account

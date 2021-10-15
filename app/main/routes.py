@@ -70,7 +70,7 @@ def addtask():
         db.session.add(task)
         db.session.commit()
         flash("New task added successfully")
-        return redirect(url_for("task_detail", id=task.id))
+        return redirect(url_for("main.task_detail", id=task.id))
     return render_template("addtask.html", title="Add task", form=form)
 
 

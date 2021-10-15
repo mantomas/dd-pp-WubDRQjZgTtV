@@ -21,3 +21,22 @@ def test_tasks_query(session):
     task_query = Task.query.get(task.id)
     assert task_query.title == "Some task"
     assert task_query.desc == "Lorem ipsum"
+
+
+def test_mark_finished(session):
+    task = Task(title="Some task")
+    session.add(task)
+    session.commit()
+    task_query = Task.query.get(1)
+    assert task.finished is False
+    task_query.mark_finished()
+    assert task_query.finished is True
+
+
+def test_mark_unfinished(session):
+    task = Task(title="Some task")
+    task.mark_unfinished()
+    session.add(task)
+    session.commit()
+    task_query = Task.query.get(1)
+    assert task_query.finished is False

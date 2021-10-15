@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     tasks = db.relationship("Task", backref="author", lazy="dynamic")
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return f"<User {self.username}>"
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -43,7 +43,7 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
-        return "<Task {}>".format(self.title)
+        return f"<Task {self.title}>"
 
     def mark_finished(self):
         self.finished = True

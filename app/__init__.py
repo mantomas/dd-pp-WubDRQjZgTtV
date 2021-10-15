@@ -32,7 +32,7 @@ def create_app(config_class=Config):
     app.register_blueprint(errors_bp)
 
     from app.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(auth_bp, url_prefix="/auth")
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -41,7 +41,9 @@ def create_app(config_class=Config):
         # creates rotating log files if not in debug mode
         if not os.path.exists("logs"):
             os.mkdir("logs")
-        file_handler = RotatingFileHandler("logs/todo.log", maxBytes=10240, backupCount=10)
+        file_handler = RotatingFileHandler(
+            "logs/todo.log", maxBytes=10240, backupCount=10
+        )
         file_handler.setFormatter(
             logging.Formatter(
                 "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]"

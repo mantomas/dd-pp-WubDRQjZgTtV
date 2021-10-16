@@ -1,42 +1,40 @@
 from app.models import Task
+from datetime import datetime
+
+
+def test_task_model():
+    task = Task(
+        id=1,
+        title="Some task",
+        desc="Lorem ipsum",
+        file_path="123_curiculum.pdf",
+        file_name="curiculum.pdf",
+        deadline=datetime.now(),
+        finished=False,
+        utc_offset=-120,
+        user_id=1
+        )
+    assert task.title == "Some task"
+    assert task.finished is False
+    assert task.file_path != task.file_name
+    assert isinstance(task.deadline, datetime)
+    assert task.finished_time is None
 
 
 def test_mark_finished():
-    t = Task(title="testing title", desc="Lorem ipsum", finished=True)
-    assert t.finished == True
-
-
-def test_tasks_query(session):
-    task = Task(
-        title="Some task",
-        desc="Lorem ipsum"
-        )
-    session.add(task)
-    session.commit()
-    # check created task
-    assert task.id > 0
-    assert task.title == "Some task"
-    assert task.finished == False
-    # query task from DB and check again
-    task_query = Task.query.get(task.id)
-    assert task_query.title == "Some task"
-    assert task_query.desc == "Lorem ipsum"
-
-
-def test_mark_finished(session):
     task = Task(title="Some task")
-    session.add(task)
-    session.commit()
-    task_query = Task.query.get(1)
-    assert task.finished is False
-    task_query.mark_finished()
-    assert task_query.finished is True
+    assert task.finished_time is None
+    task.mark_finished()
+    assert task.finished is True
+    assert isinstance(task.finished_time, datetime)
 
 
 def test_mark_unfinished(session):
-    task = Task(title="Some task")
+    task = Task(
+        title="Some task",
+        finished=True,
+        finished_time=datetime.now()
+        )
     task.mark_unfinished()
-    session.add(task)
-    session.commit()
-    task_query = Task.query.get(1)
-    assert task_query.finished is False
+    assert task.finished is False
+    assert task.finished_time is None

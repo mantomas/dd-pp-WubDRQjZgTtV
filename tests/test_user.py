@@ -12,3 +12,4 @@ def test_set_password(session):
     users = User.query.all()
     assert len(users) > 0
     assert users[0].check_password("password") is True
+    assert users[0].password_hash != "password"

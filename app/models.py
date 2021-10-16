@@ -51,6 +51,7 @@ class Task(db.Model):
 
     def mark_unfinished(self):
         self.finished = False
+        self.finished_time = None
 
 
 @login.user_loader

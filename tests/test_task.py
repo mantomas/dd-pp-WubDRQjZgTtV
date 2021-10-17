@@ -19,6 +19,7 @@ def test_task_model():
     assert task.file_path != task.file_name
     assert isinstance(task.deadline, datetime)
     assert task.finished_time is None
+    assert task.__repr__() == "<Task Some task>"
 
 
 def test_mark_finished():

@@ -70,3 +70,11 @@ def session(db, request):
 
     request.addfinalizer(teardown)
     return session
+
+@pytest.fixture
+def client(app, db):
+    
+    with app.test_client() as client:
+        with app.app_context():
+            db.app = app
+        yield client

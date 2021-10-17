@@ -29,7 +29,7 @@ def test_mark_finished():
     assert isinstance(task.finished_time, datetime)
 
 
-def test_mark_unfinished(session):
+def test_mark_unfinished():
     task = Task(
         title="Some task",
         finished=True,

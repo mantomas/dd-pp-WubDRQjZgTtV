@@ -75,6 +75,7 @@ todo
 **app/errors/handlers.py** - routing for error pages  
 **templates** - Jinja templates in html  
 **migrations** - keeping track of DB changes and their migrations, used for DB upgrade - auto-generated  
+**tests** - tests folder, use Pytest  
 **tests/conftest.py** - test fixtures  
 
 ## Installation and running (development)
